@@ -3,8 +3,7 @@ package com.example.plugins
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.example.core.utils.PropertiesConfigName
-import com.example.core.utils.exception.AuthorizationException
-import com.example.core.utils.handler.ErrorResponse
+import com.example.core.utils.exception.AuthorizationExceptionGroup
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -32,7 +31,7 @@ fun Application.configureSecurity() {
                 if (credential.payload.audience.contains(audience)) JWTPrincipal(credential.payload) else null
             }
             challenge { defaultScheme, realm ->
-                throw AuthorizationException()
+                throw AuthorizationExceptionGroup.AuthorizationException()
             }
         }
     }
