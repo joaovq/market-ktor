@@ -1,9 +1,13 @@
 package com.example.routes.auth
 
+import at.favre.lib.crypto.bcrypt.BCrypt
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import com.example.core.security.BCryptPasswordHasher
 import com.example.core.utils.PropertiesConfigName
+import com.example.core.utils.exception.AuthorizationExceptionGroup
 import com.example.dao.user.userDao
+import com.example.models.User
 import com.example.schema.mapper.toEntity
 import com.example.schema.request.CreateUserRequest
 import com.example.schema.request.LoginRequest
@@ -15,6 +19,7 @@ import io.ktor.server.request.*
 import io.ktor.server.resources.post
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import java.lang.RuntimeException
 import java.util.*
 
 
@@ -31,12 +36,14 @@ fun Route.initializeAuthRouter() {
     val myRealm = environment?.config?.property(PropertiesConfigName.Jwt.JWT_REALM)?.getString()
     post<Token> { _ ->
         val user = call.receive<LoginRequest>()
-        val token = JWT.create()
-            .withAudience(audience)
-            .withIssuer(issuer)
-            .withClaim("username", user.username)
-            .withExpiresAt(genExpiresTime())
-            .sign(Algorithm.HMAC256(secret))
+        val userFound = userDao.findUserByUsername(user.username).also { getUser: User? ->
+            if (getUser == null) throw AuthorizationExceptionGroup.InvalidCredentialsException()
+        }
+        val bcryptResult = BCryptPasswordHasher().check(user.password, userFound?.password.orEmpty())
+        if (!bcryptResult.verified) {
+            throw AuthorizationExceptionGroup.InvalidCredentialsException()
+        }
+        val token = genToken(audience, issuer, user, secret)
         call.respond(
             TokenResponse(
                 token
@@ -55,6 +62,18 @@ fun Route.initializeAuthRouter() {
         )
     }
 }
+
+private fun genToken(
+    audience: String?,
+    issuer: String?,
+    user: LoginRequest,
+    secret: String?
+): String = JWT.create()
+    .withAudience(audience)
+    .withIssuer(issuer)
+    .withClaim("username", user.username)
+    .withExpiresAt(genExpiresTime())
+    .sign(Algorithm.HMAC256(secret))
 
 fun genExpiresTime(milliseconds: Int = 60000) =
     Date(System.currentTimeMillis() + milliseconds)
