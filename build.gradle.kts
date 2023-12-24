@@ -57,4 +57,6 @@ dependencies {
 
 //    Validation
     implementation("io.ktor:ktor-server-request-validation:$ktor_version")
+// https://mvnrepository.com/artifact/at.favre.lib/bcrypt
+    implementation("at.favre.lib:bcrypt:0.10.2")
 }
