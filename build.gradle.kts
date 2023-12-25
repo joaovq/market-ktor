@@ -6,19 +6,12 @@ val hikaricp_version: String by project
 val ehcache_version: String by project
 val koin_ktor: String by project
 val koin_version: String by project
+val prometheus_version: String by project
 
 plugins {
     kotlin("jvm") version "1.9.20"
     id("io.ktor.plugin") version "2.3.6"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.20"
-    id ("org.flywaydb.flyway") version "8.5.4"
-}
-
-flyway {
-    url = System.getenv("DB_URL")
-    user = System.getenv("DB_USER")
-    password = System.getenv("DB_PASSWORD")
-    baselineOnMigrate = true
 }
 
 group = "com.example"
@@ -74,7 +67,7 @@ dependencies {
     implementation("at.favre.lib:bcrypt:0.10.2")
 
 //    Migrations
-    implementation("org.flywaydb:flyway-core:6.5.2")
+    implementation("org.flywaydb:flyway-core:10.0.0")
 
 //    Caching db and pooling
     implementation("com.zaxxer:HikariCP:$hikaricp_version")
@@ -91,6 +84,9 @@ dependencies {
     testImplementation("io.insert-koin:koin-test:$koin_version")
     // Koin for JUnit 5
     testImplementation("io.insert-koin:koin-test-junit5:$koin_version")
+
+    implementation("io.ktor:ktor-server-metrics-micrometer:$ktor_version")
+    implementation("io.micrometer:micrometer-registry-prometheus:$prometheus_version")
 }
 
 
