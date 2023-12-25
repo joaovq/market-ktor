@@ -1,4 +1,4 @@
-package com.example.schema.request
+package com.example.domain.request
 
 import kotlinx.serialization.Serializable
 

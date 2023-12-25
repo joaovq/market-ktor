@@ -1,9 +1,7 @@
-package com.example.schema.mapper
+package com.example.domain.mapper
 
 import com.example.models.User
 import com.example.models.UserEntity
-import com.example.models.UserRole
-import com.example.schema.request.CreateUserRequest
 
 
 fun UserEntity.toUser() = User(

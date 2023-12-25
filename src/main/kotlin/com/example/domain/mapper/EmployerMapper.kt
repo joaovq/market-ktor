@@ -1,4 +1,4 @@
-package com.example.schema.mapper
+package com.example.domain.mapper
 
 import com.example.models.Employer
 import com.example.models.EmployerEntity

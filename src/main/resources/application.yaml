@@ -5,6 +5,8 @@ ktor:
     watch:
       - classes
       - resources
+    shutdown:
+      url: "/shutdown"
 #    sslPort: 8443
   application:
     modules:
