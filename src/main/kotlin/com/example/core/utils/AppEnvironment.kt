@@ -1,6 +1,6 @@
 package com.example.core.utils
 
-enum class AppEnviroment(
+enum class AppEnvironment(
     val type: String
 ) {
     DEV("dev"),
