@@ -4,8 +4,9 @@ import com.example.dao.DatabaseFactory
 import com.example.plugins.*
 import io.ktor.server.application.*
 import io.ktor.server.netty.*
+import org.flywaydb.core.Flyway
 
-fun main(args: Array<String>) = EngineMain.main(args =args) /*{
+fun main(args: Array<String>) = EngineMain.main(args = args) /*{
     embeddedServer(
         Netty,
         port = 8080,
@@ -20,13 +21,15 @@ fun main(args: Array<String>) = EngineMain.main(args =args) /*{
 }*/
 
 fun Application.module() {
-    DatabaseFactory.init()
+//    TODO use ktor client for consume other service
+    DatabaseFactory.init(environment.config)
+    configureKoin()
     configureMonitoring()
     configureSerialization()
     configureCORS()
     configureHTTP()
     configureSecurity()
-    configureRouting()
     configureStatusPage()
     configureRequestValidation()
+    configureRouting()
 }

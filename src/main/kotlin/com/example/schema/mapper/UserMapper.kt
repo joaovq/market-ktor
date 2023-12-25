@@ -1,11 +1,15 @@
 package com.example.schema.mapper
 
 import com.example.models.User
+import com.example.models.UserEntity
+import com.example.models.UserRole
 import com.example.schema.request.CreateUserRequest
 
-fun CreateUserRequest.toEntity() = User(
+
+fun UserEntity.toUser() = User(
+    id = this.id.toString(),
     username = this.username,
-    password = this.password,
     email = this.email,
-    isActive = true
+    isActive = this.isActive,
+    role = this.role,
 )
