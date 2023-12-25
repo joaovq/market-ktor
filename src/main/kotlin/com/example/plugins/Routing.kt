@@ -23,13 +23,13 @@ import java.io.File
 fun Application.configureRouting() {
     val env = environment.config.propertyOrNull(PropertiesConfigName.KTOR_ENVIRON)?.getString().toEnvironment()
     install(Resources)
-//    ShutDown Application
+//    ShutDown Application in code
     /*    install(ShutDownUrl.ApplicationCallPlugin) {
             shutDownUrl = "/shutdown"
             exitCodeSupplier = { 0 }
         }*/
     routing {
-        get {
+        get("/") {
             call.respondText(
                 when (env) {
                     AppEnvironment.DEV -> "Development"
@@ -56,6 +56,7 @@ fun Application.configureRouting() {
             initializeFilesRouter()
         }
         singlePageApplication {
+         //   TODO Create React app
             react("react-app")
         }
     }

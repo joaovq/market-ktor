@@ -73,5 +73,7 @@ fun Application.configureStatusPage() {
                 )
             )
         }
+
+//        TODO handler NotImplementedError
     }
 }
