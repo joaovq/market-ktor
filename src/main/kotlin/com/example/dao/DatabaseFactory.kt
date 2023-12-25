@@ -47,6 +47,7 @@ object DatabaseFactory {
     private fun runFlyway(datasource: HikariDataSource) {
         val flyway = Flyway.configure().baselineOnMigrate(true).dataSource(datasource).load()
         try {
+            flyway.info()
             flyway.migrate()
         } catch (e: Exception) {
             log.error("Exception running flyway migration", e)
