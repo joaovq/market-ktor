@@ -9,6 +9,10 @@ ktor:
   application:
     modules:
       - com.example.ApplicationKt.module
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
 #  security:
 #    ssl:
 #      keyStore: keystore.jks
@@ -21,3 +25,10 @@ jwt:
   issuer: "http://0.0.0.0:8080/"
   audience: "http://0.0.0.0:8080/hello"
   realm: "Access to 'hello'"
+storage:
+  driverClassName: org.h2.Driver
+  jdbcURL: "jdbc:h2:file:"
+  dbFilePath: build/db
+  user: ""
+  password: ""
+  ehcacheFilePath: build/ehcache
