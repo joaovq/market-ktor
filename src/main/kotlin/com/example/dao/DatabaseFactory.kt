@@ -15,9 +15,11 @@ import org.jetbrains.exposed.sql.StdOutSqlLogger
 import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.slf4j.LoggerFactory
 import java.io.File
 
 object DatabaseFactory {
+    private val log = LoggerFactory.getLogger(this::class.java)
     fun init(
         config: ApplicationConfig
     ) {
@@ -28,19 +30,29 @@ object DatabaseFactory {
                 (config.propertyOrNull(PropertiesConfigName.Storage.STORAGE_DB_PATH)?.getString()?.let {
                     File(it).canonicalFile.absolutePath
                 } ?: "")
-        val datasource = createHikariDataSource(url = jdbcURL, driver = driverClassName, user, password)
+        val datasource =
+            createHikariDataSource(url = jdbcURL, driver = driverClassName, user = user, password = password)
 
-        /*val flyway = Flyway.configure().dataSource(datasource).load()
-        flyway.migrate()*/
+        runFlyway(datasource)
         val database = Database.connect(
             datasource
         )
-//        TODO fix flyway migrate
         transaction(database) {
             addLogger(StdOutSqlLogger)
-            SchemaUtils.create(Users)
-            SchemaUtils.create(Employers)
+            /*SchemaUtils.create(Users)
+            SchemaUtils.create(Employers)*/
         }
+    }
+
+    private fun runFlyway(datasource: HikariDataSource) {
+        val flyway = Flyway.configure().baselineOnMigrate(true).dataSource(datasource).load()
+        try {
+            flyway.migrate()
+        } catch (e: Exception) {
+            log.error("Exception running flyway migration", e)
+            throw e
+        }
+        log.info("Flyway migration has finished")
     }
 
     private fun createHikariDataSource(

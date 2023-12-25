@@ -1,5 +1,6 @@
 package com.example.models
 
+import com.example.core.utils.models.EmployerTableValues
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.dao.Entity
 import org.jetbrains.exposed.dao.EntityClass
@@ -32,11 +33,16 @@ class EmployerEntity(id: EntityID<UUID>) : UUIDEntity(id) {
     var user by UserEntity referencedOn Employers.user
 }
 
-data object Employers : UUIDTable("employer_tb") {
-    val firstName = varchar("employer_first_name", 1024)
-    val lastName = varchar("employer_last_name", 1024)
-    val cpf = varchar("employer_cpf", 1024)
-    val address = varchar("employer_address", 1024)
-    val salary = decimal("employer_salary", precision = 30, 3)
-    val user = reference("user_id", Users.id, onDelete = ReferenceOption.SET_NULL, onUpdate = ReferenceOption.CASCADE)
+data object Employers : UUIDTable(EmployerTableValues.tableName) {
+    val firstName = varchar(EmployerTableValues.EMPLOYER_FIRST_NAME, 1024)
+    val lastName = varchar(EmployerTableValues.EMPLOYER_LAST_NAME, 1024)
+    val cpf = varchar(EmployerTableValues.EMPLOYER_CPF_NAME, 1024)
+    val address = varchar(EmployerTableValues.EMPLOYER_ADDRESS_NAME, 1024)
+    val salary = decimal(EmployerTableValues.EMPLOYER_SALARY_NAME, precision = 30, 3)
+    val user = reference(
+        EmployerTableValues.EMPLOYER_USER_NAME,
+        Users.id,
+        onDelete = ReferenceOption.SET_NULL,
+        onUpdate = ReferenceOption.CASCADE
+    )
 }

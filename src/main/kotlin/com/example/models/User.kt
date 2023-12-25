@@ -1,5 +1,6 @@
 package com.example.models
 
+import com.example.core.utils.models.UserTableValues
 import com.example.models.Users.default
 import com.example.models.Users.uniqueIndex
 import kotlinx.serialization.Serializable
@@ -22,6 +23,7 @@ data class User(
 
 class UserEntity(id: EntityID<UUID>) : UUIDEntity(id) {
     companion object : UUIDEntityClass<UserEntity>(Users)
+
     var userId by Users.id
     var username by Users.username
     var password by Users.password
@@ -30,10 +32,10 @@ class UserEntity(id: EntityID<UUID>) : UUIDEntity(id) {
     var role by Users.role
 }
 
-object Users : UUIDTable(name = "user_tb") {
-    val username = varchar("user_username", 128).uniqueIndex()
-    val password = varchar("user_password", 1024)
-    val email = varchar("user_email", 1024)
-    val isActive = bool("user_is_active").default(true)
-    val role = enumeration("user_role", UserRole::class).default(UserRole.USER)
+object Users : UUIDTable(name = UserTableValues.tableName) {
+    val username = varchar(UserTableValues.USER_USERNAME, 128).uniqueIndex()
+    val password = varchar(UserTableValues.USER_PASSWORD_NAME, 1024)
+    val email = varchar(UserTableValues.USER_EMAIL_NAME, 1024)
+    val isActive = bool(UserTableValues.USER_IS_ACTIVE_NAME).default(true)
+    val role = enumeration(UserTableValues.USER_ROLE_NAME, UserRole::class).default(UserRole.USER)
 }

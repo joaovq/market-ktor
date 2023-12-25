@@ -27,6 +27,7 @@ fun Application.module() {
     configureKoin()
     configureMonitoring()
     configureSerialization()
+    configureMetrics()
     configureCORS()
     configureHTTP()
     configureSecurity()
