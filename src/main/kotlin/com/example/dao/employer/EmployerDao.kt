@@ -5,11 +5,8 @@ import com.example.dao.DatabaseFactory.dbQuery
 import com.example.dao.user.UserRepository
 import com.example.models.Employer
 import com.example.models.EmployerEntity
-import com.example.schema.mapper.toEmployer
-import com.example.schema.request.CreateEmployerRequest
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.domain.mapper.toEmployer
+import com.example.domain.request.CreateEmployerRequest
 import java.math.BigDecimal
 import java.util.*
 

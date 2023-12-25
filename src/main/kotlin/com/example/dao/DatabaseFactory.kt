@@ -1,5 +1,6 @@
 package com.example.dao
 
+import com.example.core.utils.PropertiesConfigName
 import com.example.models.Employers
 import com.example.models.Users
 import com.zaxxer.hikari.HikariConfig
@@ -20,19 +21,20 @@ object DatabaseFactory {
     fun init(
         config: ApplicationConfig
     ) {
-        val driverClassName = config.property("storage.driverClassName").getString()
-        val user = config.property("storage.user").getString()
-        val password = config.property("storage.password").getString()
-        val jdbcURL = config.property("storage.jdbcURL").getString() +
-                (config.propertyOrNull("storage.dbFilePath")?.getString()?.let {
+        val driverClassName = config.property(PropertiesConfigName.Storage.STORAGE_DRIVER_CLASS_NAME).getString()
+        val user = config.property(PropertiesConfigName.Storage.STORAGE_USER).getString()
+        val password = config.property(PropertiesConfigName.Storage.STORAGE_PASSWORD).getString()
+        val jdbcURL = config.property(PropertiesConfigName.Storage.STORAGE_JDBC_URL).getString() +
+                (config.propertyOrNull(PropertiesConfigName.Storage.STORAGE_DB_PATH)?.getString()?.let {
                     File(it).canonicalFile.absolutePath
                 } ?: "")
         val datasource = createHikariDataSource(url = jdbcURL, driver = driverClassName, user, password)
+
+        /*val flyway = Flyway.configure().dataSource(datasource).load()
+        flyway.migrate()*/
         val database = Database.connect(
             datasource
         )
-       /* val flyway = Flyway.configure().dataSource(datasource).load()
-        flyway.migrate()*/
 //        TODO fix flyway migrate
         transaction(database) {
             addLogger(StdOutSqlLogger)

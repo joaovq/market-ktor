@@ -2,7 +2,7 @@ package com.example.dao.user
 
 import com.example.models.User
 import com.example.models.UserEntity
-import com.example.schema.request.CreateUserRequest
+import com.example.domain.request.CreateUserRequest
 import java.util.UUID
 
 interface UserRepository {

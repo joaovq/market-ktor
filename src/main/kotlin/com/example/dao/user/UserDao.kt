@@ -6,9 +6,8 @@ import com.example.dao.DatabaseFactory.dbQuery
 import com.example.models.User
 import com.example.models.UserEntity
 import com.example.models.Users
-import com.example.schema.mapper.toUser
-import com.example.schema.request.CreateUserRequest
-import org.jetbrains.exposed.sql.*
+import com.example.domain.mapper.toUser
+import com.example.domain.request.CreateUserRequest
 import java.util.*
 
 class UserDao(
