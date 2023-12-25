@@ -4,41 +4,36 @@ import com.example.core.security.BCryptPasswordHasher
 import com.example.core.security.PasswordHash
 import com.example.dao.DatabaseFactory.dbQuery
 import com.example.models.User
+import com.example.models.UserEntity
 import com.example.models.Users
+import com.example.schema.mapper.toUser
+import com.example.schema.request.CreateUserRequest
 import org.jetbrains.exposed.sql.*
+import java.util.*
 
 class UserDao(
     private val passwordHasher: PasswordHash = BCryptPasswordHasher()
 ) : UserRepository {
 
-    private fun resultRowToUser(row: ResultRow) = User(
-        id = row[Users.id].toString(),
-        username = row[Users.username],
-        password = row[Users.password],
-        email = row[Users.email],
-        isActive = row[Users.isActive],
-    )
-
     override suspend fun findAll(): List<User> = dbQuery {
-        Users.selectAll().map(::resultRowToUser)
+        UserEntity.all().map(UserEntity::toUser)
     }
 
-    override suspend fun findUserByUsername(username: String): User? = dbQuery {
-        Users.select { Users.username eq username }
-            .map(::resultRowToUser)
-            .singleOrNull()
+    override suspend fun findUserByUsername(username: String): UserEntity? = dbQuery {
+        UserEntity.find { Users.username eq username }.singleOrNull()
+    }
+
+    override suspend fun findUserById(id: UUID): UserEntity? = dbQuery {
+        UserEntity.findById(id)
     }
 
 
-    override suspend fun addNewUser(user: User): User? = dbQuery {
-        val insertStatement = Users.insert { table ->
-            table[username] = user.username
-            table[password] = passwordHasher.encryptPassword(user.password)
-            table[email] = user.email
-            table[isActive] = user.isActive
+    override suspend fun addNewUser(user: CreateUserRequest): User = dbQuery {
+        val newUser = UserEntity.new {
+            this.username = user.username
+            this.password = passwordHasher.encryptPassword(user.password)
+            this.email = user.email
         }
-        insertStatement.resultedValues?.singleOrNull()?.let(::resultRowToUser)
+        newUser.toUser()
     }
 }
-
-val userDao = UserDao()
