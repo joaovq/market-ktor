@@ -2,7 +2,7 @@ package com.example.routes.employer
 
 import com.example.dao.employer.EmployerRepository
 import com.example.plugins.AUTH_NAME
-import com.example.schema.request.CreateEmployerRequest
+import com.example.domain.request.CreateEmployerRequest
 import io.ktor.http.*
 import io.ktor.resources.*
 import io.ktor.server.application.*
@@ -12,7 +12,6 @@ import io.ktor.server.resources.post
 import io.ktor.server.resources.get
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.netty.handler.codec.HeadersUtils
 import org.koin.ktor.ext.inject
 
 fun Route.initializeEmployerRouter() {

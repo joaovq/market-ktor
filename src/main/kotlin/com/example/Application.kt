@@ -20,6 +20,7 @@ fun main(args: Array<String>) = EngineMain.main(args = args) /*{
         .start(wait = true)
 }*/
 
+@Suppress("unused")
 fun Application.module() {
 //    TODO use ktor client for consume other service
     DatabaseFactory.init(environment.config)

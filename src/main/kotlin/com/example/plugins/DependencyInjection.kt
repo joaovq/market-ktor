@@ -1,6 +1,7 @@
 package com.example.plugins
 
 import com.example.di.daoModule
+import com.example.di.domainModule
 import io.ktor.server.application.*
 import org.koin.ktor.plugin.Koin
 import org.koin.ktor.plugin.koin
@@ -10,7 +11,8 @@ fun Application.configureKoin() {
     koin {
         slf4jLogger()
         modules(
-            daoModule
+            daoModule,
+            domainModule
         )
     }
 }

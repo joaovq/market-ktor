@@ -1,8 +1,7 @@
 package com.example.plugins
 
-import com.example.models.User
-import com.example.schema.request.CreateUserRequest
-import com.example.schema.request.LoginRequest
+import com.example.domain.request.CreateUserRequest
+import com.example.domain.request.LoginRequest
 import io.ktor.server.application.*
 import io.ktor.server.plugins.requestvalidation.*
 
