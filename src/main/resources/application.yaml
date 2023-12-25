@@ -30,7 +30,7 @@ jwt:
 storage:
   driverClassName: org.h2.Driver
   jdbcURL: "jdbc:h2:file:"
-  dbFilePath: build/db
+  dbFilePath: build/db;DATABASE_TO_UPPER=false
   user: ""
   password: ""
   ehcacheFilePath: build/ehcache
