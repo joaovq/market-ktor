@@ -29,7 +29,7 @@ fun Application.configureRouting() {
             exitCodeSupplier = { 0 }
         }*/
     routing {
-        get("/") {
+        get("/env") {
             call.respondText(
                 when (env) {
                     AppEnvironment.DEV -> "Development"
@@ -56,8 +56,12 @@ fun Application.configureRouting() {
             initializeFilesRouter()
         }
         singlePageApplication {
-         //   TODO Create React app
-            react("react-app")
+//            applicationRoute = "/"
+//            filesPath = "react-app"
+//            useResources = true
+//            defaultPage = "index.html"
+           applicationRoute = "/"
+           react("react-app/dist")
         }
     }
 }
