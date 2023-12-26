@@ -1,15 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import axios  from 'axios'
 
 function App() {
   const [count, setCount] = useState(0)
+  useEffect(() => {
+    const get = async () => {
+      const api = axios.create({baseURL: import.meta.env.VITE_API_URL})
+      const response = await api.get("/env")
+      console.log(response.data)
+    }
+    get()
+  })
 
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
+        <a href="https://vitejs.dev" title='Vite link' target="_blank" >
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
         <a href="https://react.dev" target="_blank">
@@ -18,7 +27,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        <button type='button' onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
         <p>
