@@ -1,0 +1,1 @@
+alter table user_tb add column user_created datetime(9) null;

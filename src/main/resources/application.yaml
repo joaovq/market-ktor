@@ -10,7 +10,7 @@ ktor:
 #    sslPort: 8443
   application:
     modules:
-      - com.example.ApplicationKt.module
+      - br.com.joaovq.ApplicationKt.module
   h2:
     console:
       enabled: true
