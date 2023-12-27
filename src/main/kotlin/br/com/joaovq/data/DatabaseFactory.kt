@@ -1,7 +1,10 @@
 package br.com.joaovq.data
 
 import br.com.joaovq.data.models.Employers
+import br.com.joaovq.data.models.UserEntity
+import br.com.joaovq.data.models.UserRole
 import br.com.joaovq.data.models.Users
+import com.market.core.security.BCryptPasswordHasher
 import com.market.core.utils.PropertiesConfigName
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
@@ -40,6 +43,12 @@ object DatabaseFactory {
             addLogger(StdOutSqlLogger)
             /*SchemaUtils.create(Users)
             SchemaUtils.create(Employers)*/
+            /*UserEntity.new {
+                this.username = "joaovq"
+                this.password = BCryptPasswordHasher().encryptPassword("156678894vitor")
+                this.email = "gui@gmail.com"
+                this.role = UserRole.ADMIN
+            }*/
         }
     }
 

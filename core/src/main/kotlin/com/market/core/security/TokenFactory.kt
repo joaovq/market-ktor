@@ -13,13 +13,13 @@ object TokenFactory {
         audience: String?,
         issuer: String?,
         username: String,
-        isAdmin: Boolean,
+        role: String,
         secret: String?
     ): String = JWT.create()
         .withAudience(audience)
         .withIssuer(issuer)
         .withClaim(CLAIM_NAME_USERNAME, username)
-        .withClaim(CLAIM_NAME_ADMIN, isAdmin)
+        .withClaim(CLAIM_NAME_ADMIN, role)
         .withExpiresAt(genExpiresTime())
         .sign(Algorithm.HMAC256(secret))
 }

@@ -37,7 +37,7 @@ class UserDao(
         newUser.toUser()
     }
 
-    override suspend fun deleteUser(id: UUID) {
+    override suspend fun deleteUser(id: UUID) = dbQuery {
         findUserById(id).delete()
     }
 }

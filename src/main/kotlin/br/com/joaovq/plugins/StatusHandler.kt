@@ -37,6 +37,15 @@ fun Application.configureStatusPage() {
                         ), status = HttpStatusCode.BadRequest
                     )
                 }
+
+                is AuthorizationExceptionGroup.NotAuthorizedException -> {
+                    call.respond(
+                        message = ErrorResponse(
+                            cause.message,
+                            HttpStatusCode.Forbidden.value
+                        ), status = HttpStatusCode.Forbidden
+                    )
+                }
             }
         }
 

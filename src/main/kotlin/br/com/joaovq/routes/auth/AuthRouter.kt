@@ -53,7 +53,7 @@ fun Route.initializeAuthRouter(
             audience,
             issuer,
             userEntity.username,
-            userEntity.role == UserRole.ADMIN,
+            userEntity.role.value,
             secret
         )
         call.respond(

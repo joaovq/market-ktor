@@ -22,10 +22,9 @@ data class User(
     val createdAt: String
 )
 
-class UserEntity(id: EntityID<UUID>) : UUIDEntity(id)  {
+class UserEntity(id: EntityID<UUID>) : UUIDEntity(id), Principal {
     companion object : UUIDEntityClass<UserEntity>(Users)
 
-    var userId by Users.id
     var username by Users.username
     var password by Users.password
     var email by Users.email
