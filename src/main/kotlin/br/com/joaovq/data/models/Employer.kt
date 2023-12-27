@@ -43,6 +43,9 @@ data object Employers : UUIDTable(EmployerTableValues.tableName) {
         onDelete = ReferenceOption.SET_NULL,
         onUpdate = ReferenceOption.CASCADE
     )
+//  TODO maybe change id for userId as Primary Key
 //    Relation one to one
         .uniqueIndex()
+
+
 }

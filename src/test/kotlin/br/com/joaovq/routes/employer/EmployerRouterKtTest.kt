@@ -1,8 +1,6 @@
 package br.com.joaovq.routes.employer
 
-import com.example.core.utils.AppVersion
-import com.example.data.models.Employer
-import io.ktor.client.call.*
+import com.market.core.utils.AppVersion
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.server.testing.*

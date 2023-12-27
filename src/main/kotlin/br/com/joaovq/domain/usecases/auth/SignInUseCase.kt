@@ -6,6 +6,7 @@ import br.com.joaovq.domain.request.LoginRequest
 import com.market.core.security.PasswordHash
 import com.market.core.utils.exception.AuthorizationExceptionGroup
 import io.ktor.server.application.*
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -15,9 +16,11 @@ interface SignInUseCase {
 
 class SignInUser(
     private val userRepository: UserRepository,
-    private val passwordHash: PasswordHash
+    private val passwordHash: PasswordHash,
+    private val coroutineDispatcher: CoroutineDispatcher
+
 ) : SignInUseCase {
-    override suspend fun invoke(user: LoginRequest): UserEntity = withContext(Dispatchers.IO) {
+    override suspend fun invoke(user: LoginRequest): UserEntity = withContext(coroutineDispatcher) {
         val userFound = userRepository.findUserByUsername(user.username)
             ?: throw AuthorizationExceptionGroup.InvalidCredentialsException()
         val bcryptResult = passwordHash.check(user.password, userFound.password)

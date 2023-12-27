@@ -2,6 +2,7 @@ package br.com.joaovq.data.models
 
 import br.com.joaovq.data.models.Users.default
 import com.market.core.utils.models.UserTableValues
+import io.ktor.server.auth.*
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
@@ -21,7 +22,7 @@ data class User(
     val createdAt: String
 )
 
-class UserEntity(id: EntityID<UUID>) : UUIDEntity(id) {
+class UserEntity(id: EntityID<UUID>) : UUIDEntity(id)  {
     companion object : UUIDEntityClass<UserEntity>(Users)
 
     var userId by Users.id

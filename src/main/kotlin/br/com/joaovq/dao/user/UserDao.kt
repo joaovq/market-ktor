@@ -8,6 +8,7 @@ import br.com.joaovq.domain.mapper.toUser
 import br.com.joaovq.domain.request.CreateUserRequest
 import com.market.core.security.BCryptPasswordHasher
 import com.market.core.security.PasswordHash
+import com.market.core.utils.exception.BusinessExceptionGroup
 import java.util.*
 
 class UserDao(
@@ -22,8 +23,8 @@ class UserDao(
         UserEntity.find { Users.username eq username }.singleOrNull()
     }
 
-    override suspend fun findUserById(id: UUID): UserEntity? = dbQuery {
-        UserEntity.findById(id)
+    override suspend fun findUserById(id: UUID): UserEntity = dbQuery {
+        UserEntity.findById(id) ?: throw BusinessExceptionGroup.UserNotFoundException()
     }
 
 
@@ -34,5 +35,9 @@ class UserDao(
             this.email = user.email
         }
         newUser.toUser()
+    }
+
+    override suspend fun deleteUser(id: UUID) {
+        findUserById(id).delete()
     }
 }

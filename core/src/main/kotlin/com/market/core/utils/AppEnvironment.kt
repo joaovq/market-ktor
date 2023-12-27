@@ -6,3 +6,8 @@ enum class AppEnvironment(
     DEV("dev"),
     PROD("dev");
 }
+
+fun AppEnvironment.toActualEnvironment() = when (this) {
+    AppEnvironment.DEV -> "Development"
+    AppEnvironment.PROD -> "Production"
+}

@@ -6,15 +6,17 @@ import br.com.joaovq.domain.usecases.auth.SignUpUserUseCase
 import br.com.joaovq.routes.auth.initializeAuthRouter
 import br.com.joaovq.routes.employer.initializeEmployerRouter
 import br.com.joaovq.routes.files.initializeFilesRouter
-import com.market.core.utils.AppEnvironment
+import br.com.joaovq.routes.user.initializeUserRouter
 import com.market.core.utils.AppVersion
 import com.market.core.utils.PropertiesConfigName
 import com.market.core.utils.extension.toEnvironment
+import com.market.core.utils.toActualEnvironment
 import io.ktor.server.application.*
 import io.ktor.server.http.content.*
 import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.koin.ktor.ext.getKoin
 import org.koin.ktor.ext.inject
 import java.io.File
 
@@ -29,10 +31,7 @@ fun Application.configureRouting() {
     routing {
         get("/env") {
             call.respondText(
-                when (env) {
-                    AppEnvironment.DEV -> "Development"
-                    AppEnvironment.PROD -> "Production"
-                }
+                env.toActualEnvironment()
             )
         }
         // Static plugin. Try to access `/static/index.html`
@@ -48,10 +47,12 @@ fun Application.configureRouting() {
         val signInUseCase by inject<SignInUseCase>()
         val signUpUseCase by inject<SignUpUserUseCase>()
         val getProfileDataUseCase by inject<GetProfileDataUseCase>()
+        val koin = getKoin()
         route(AppVersion.V1_PATH) {
             initializeEmployerRouter()
             initializeAuthRouter(signInUseCase, signUpUseCase, getProfileDataUseCase)
             initializeFilesRouter()
+            initializeUserRouter(koin.get(), koin.get())
         }
         singlePageApplication {
 //            applicationRoute = "/"

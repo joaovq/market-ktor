@@ -1,6 +1,7 @@
 package br.com.joaovq.plugins
 
 import br.com.joaovq.di.ClientModule
+import br.com.joaovq.di.DispatcherModule
 import br.com.joaovq.di.daoModule
 import br.com.joaovq.di.domainModule
 import io.ktor.server.application.*
@@ -14,7 +15,8 @@ fun Application.configureKoin() {
         modules(
             daoModule,
             domainModule,
-            ClientModule().module
+            ClientModule().module,
+            DispatcherModule().module
         )
     }
 }

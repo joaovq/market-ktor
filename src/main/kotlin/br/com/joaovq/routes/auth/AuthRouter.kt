@@ -1,5 +1,6 @@
 package br.com.joaovq.routes.auth
 
+import br.com.joaovq.data.models.UserRole
 import br.com.joaovq.domain.mapper.toUser
 import br.com.joaovq.domain.request.CreateUserRequest
 import br.com.joaovq.domain.request.LoginRequest
@@ -8,8 +9,11 @@ import br.com.joaovq.domain.usecases.auth.GetProfileDataUseCase
 import br.com.joaovq.domain.usecases.auth.SignInUseCase
 import br.com.joaovq.domain.usecases.auth.SignUpUserUseCase
 import br.com.joaovq.plugins.AUTH_NAME
+import br.com.joaovq.routes.user.UserResource
 import com.market.core.security.TokenFactory
+import com.market.core.utils.AppVersion
 import com.market.core.utils.PropertiesConfigName
+import com.market.core.utils.exception.AuthorizationExceptionGroup
 import com.market.core.utils.exception.BusinessExceptionGroup
 import io.ktor.http.*
 import io.ktor.resources.*
@@ -45,7 +49,13 @@ fun Route.initializeAuthRouter(
     post<Token> { _ ->
         val user = call.receive<LoginRequest>()
         val userEntity = signInUseCase(user)
-        val token = TokenFactory.genToken(audience, issuer, userEntity.username, secret)
+        val token = TokenFactory.genToken(
+            audience,
+            issuer,
+            userEntity.username,
+            userEntity.role == UserRole.ADMIN,
+            secret
+        )
         call.respond(
             TokenResponse(
                 token
@@ -55,11 +65,10 @@ fun Route.initializeAuthRouter(
 
     post<Token.Register> { _ ->
         val request = call.receive<CreateUserRequest>()
+        val userUseCase = signUpUserUseCase(request) ?: throw AuthorizationExceptionGroup.InvalidCredentialsException()
+        call.response.header(HttpHeaders.Location, "${AppVersion.V1_PATH}/user/${userUseCase.id}")
         call.respond(
             HttpStatusCode.Created,
-            mapOf(
-                "user" to signUpUserUseCase(request)
-            )
         )
     }
 
