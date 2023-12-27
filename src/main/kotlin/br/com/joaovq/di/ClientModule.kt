@@ -24,7 +24,7 @@ class ClientModule {
     @OptIn(ExperimentalSerializationApi::class)
     @Single
     fun getClient(): HttpClient = HttpClient(CIO) {
-        this.developmentMode = true
+        developmentMode = true
         install(HttpTimeout) {
             requestTimeoutMillis = 1000
             connectTimeoutMillis = 3000

@@ -34,3 +34,5 @@ storage:
   user: ""
   password: ""
   ehcacheFilePath: build/ehcache
+brapi:
+  api-key: mWCQ34F6G9VS431CtN7xmt

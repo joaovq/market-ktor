@@ -59,7 +59,6 @@ fun Application.configureRouting() {
 //            filesPath = "react-app"
 //            useResources = true
 //            defaultPage = "index.html"
-            applicationRoute = "/"
             react("react-app/dist")
         }
     }

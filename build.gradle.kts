@@ -101,6 +101,12 @@ dependencies {
     implementation("io.ktor:ktor-server-metrics-micrometer:$ktor_version")
     implementation("io.micrometer:micrometer-registry-prometheus:$prometheus_version")
 
+
+    /*SLUGIFY*/
+    // https://mvnrepository.com/artifact/com.github.slugify/slugify
+    implementation("com.github.slugify:slugify:3.0.6")
+
+
 //    Ktor Client
     implementation("io.ktor:ktor-client-cio:$ktor_version")
     /*Logging*/

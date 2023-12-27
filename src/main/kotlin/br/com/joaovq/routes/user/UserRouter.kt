@@ -15,9 +15,11 @@ import io.ktor.server.routing.*
 import java.util.*
 
 @Resource("user")
-class UserResource {
+data class UserResource(val query: String = "") {
     @Resource("{id}")
     class Id(val parent: UserResource = UserResource(), val id: String)
+    @Resource("{slug}")
+    class Slug(val parent: UserResource = UserResource(), val slug: String)
 }
 
 fun Route.initializeUserRouter(
