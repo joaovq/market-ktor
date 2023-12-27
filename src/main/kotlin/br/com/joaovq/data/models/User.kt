@@ -41,4 +41,5 @@ object Users : UUIDTable(name = UserTableValues.tableName) {
     val isActive = bool(UserTableValues.USER_IS_ACTIVE_NAME).default(true)
     val role = enumerationByName(UserTableValues.USER_ROLE_NAME, 30, UserRole::class).default(UserRole.USER)
     val createdAt = datetime(UserTableValues.USER_CREATED_AT_NAME).nullable().clientDefault { LocalDateTime.now() }
+    //TODO CREATE TABLE ROLE AND PUT RELATION MANY TO MANY
 }

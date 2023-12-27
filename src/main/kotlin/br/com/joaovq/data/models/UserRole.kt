@@ -1,5 +1,7 @@
 package br.com.joaovq.data.models
 
+
+//TODO CREATE USER ROLE TABLE
 enum class UserRole(val value: String) {
     ADMIN("admin"),
     USER("user")
