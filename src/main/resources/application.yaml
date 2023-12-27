@@ -1,7 +1,8 @@
 ktor:
-  environment: dev
+  environment: "$KTOR_ENV:dev"
   deployment:
     port: "$PORT:8080"
+#    host:
     watch:
       - classes
       - resources
@@ -35,4 +36,4 @@ storage:
   password: ""
   ehcacheFilePath: build/ehcache
 brapi:
-  api-key: mWCQ34F6G9VS431CtN7xmt
+  api-key: $API_KEY

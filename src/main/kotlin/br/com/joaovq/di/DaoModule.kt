@@ -1,8 +1,8 @@
 package br.com.joaovq.di
 
-import br.com.joaovq.dao.exchange.ExchangeService
 import br.com.joaovq.dao.employer.EmployerDao
 import br.com.joaovq.dao.employer.EmployerRepository
+import br.com.joaovq.dao.exchange.ExchangeService
 import br.com.joaovq.dao.user.UserDao
 import br.com.joaovq.dao.user.UserRepository
 import com.market.core.security.BCryptPasswordHasher

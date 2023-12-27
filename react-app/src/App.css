@@ -1,7 +1,6 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -33,10 +32,63 @@
   }
 }
 
+#appHeader {
+  display: flex;
+  justify-content: center;
+}
+
+#appHeader .content {
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#appHeader nav ul {
+  display: flex;
+  flex-direction: row; gap: 3rem;
+  list-style: none;
+  flex-wrap: wrap;
+}
+#appHeader nav li {
+  cursor: pointer;
+  font-weight: 600;
+  color: black;
+  font-size: larger;
+}
+
+#appHeader nav li:hover {
+  color: grey;
+}
+
 .card {
   padding: 2em;
 }
 
+.dashboardBtn {
+  padding: .5rem;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  max-width: 120px;
+  height: 100%;
+  max-height: 45px;
+  color: white;
+  font-weight: 600;
+  background-color: purple;
+  border-radius: 10px;
+  font-size: medium;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+.dashboardBtn:hover {
+  filter: brightness(.95);
+  transition: all .3s;
+}
+.dashboardBtn:active {
+  filter: brightness(1);
+}
 .read-the-docs {
   color: #888;
 }

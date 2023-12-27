@@ -5,7 +5,9 @@ import br.com.joaovq.di.DispatcherModule
 import br.com.joaovq.di.daoModule
 import br.com.joaovq.di.domainModule
 import io.ktor.server.application.*
+import org.koin.environmentProperties
 import org.koin.ksp.generated.module
+import org.koin.ktor.plugin.RequestScope
 import org.koin.ktor.plugin.koin
 import org.koin.logger.slf4jLogger
 

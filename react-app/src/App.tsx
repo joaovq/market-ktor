@@ -17,6 +17,19 @@ function App() {
 
   return (
     <>
+      <header id='appHeader'>
+        <div className='content'>
+          <h5>Logo</h5>
+        <nav>
+          <ul>
+            <li>BLOG</li>
+            <li>ABOUT</li>
+            <li>DOCS</li>
+          </ul>
+        </nav>
+        <button className='dashboardBtn'>Dashboard</button>
+        </div>
+      </header>
       <div>
         <a href="https://vitejs.dev" title='Vite link' target="_blank" >
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -27,7 +40,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button type='button' onClick={() => setCount((count) => count + 1)}>
+        <button type='button' className='btn' onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
         <p>
